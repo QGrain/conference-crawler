@@ -36,8 +36,8 @@ def download_pdf(pdf_url, title, out_dir):
     check_dir(out_dir)
     illegal_to_blank = [':', '/', '\\', '?', '<', '>', '|', '"']
     for ic in illegal_to_blank:
-        save_title = title.replace(ic, '')
-    save_fn = os.path.join(out_dir, save_title + '.pdf')
+        title = title.replace(ic, '')
+    save_fn = os.path.join(out_dir, title + '.pdf')
     
     # get bytes content of the pdf
     r = request_get(pdf_url)

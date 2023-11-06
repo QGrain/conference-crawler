@@ -61,18 +61,21 @@ if __name__ == '__main__':
     i = 0
     success_fn = os.path.join(log_dir, 'sp_success.json')
     success_list = ck_load_list_from_json(success_fn)
+    download_cnt = 0
     for title in accepted_papers:
         i += 1
         if args.resume_from and i < args.resume_from:
             print('[%d] skip until the resume_from point: %d'%(i, args.resume_from))
             continue
         if title in success_list:
+            print('[%d] %s already processed'%(i, title))
             continue
         try:
             pdf_url = search_paper_pdf(title)
             print('[%d] %s: %s'%(i, title, pdf_url))
             if args.save == True:
                 download_pdf(pdf_url, title, out_dir)
+                download_cnt += 1
         except Exception as e:
             print('[X] paper: %s fail with exception: %s. continue.'%(title, e))
             continue
@@ -82,4 +85,4 @@ if __name__ == '__main__':
         json.dump(success_list, f)
     print('[+] write log to %s'%success_fn)
             
-    print('Done. %d/%d success! Cost %.2f seconds'%(len(success_list), len(accepted_papers), time()-t0))
+    print('Done. Download_cnt=%d. %d/%d success! Cost %.2f seconds'%(download_cnt, len(success_list), len(accepted_papers), time()-t0))
