@@ -104,7 +104,7 @@ if __name__ == '__main__':
         success_list.append(title)
     
     with open(success_fn, 'w') as f:
-        json.dump(success_list, f)
+        json.dump(success_list, f, indent=4)
     print('[+] write log to %s'%success_fn)
             
     print('Done. Download_cnt=%d. %d/%d success! Cost %.2f seconds'%(download_cnt, len(success_list), len(accepted_papers), time()-t0))
